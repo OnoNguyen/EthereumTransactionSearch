@@ -37,6 +37,9 @@ namespace EthereumTransactionSearch.Factories
             var getBlockByNumberResponse = await GetBlockByNumber(blockNumberInDec, true);
             var getBlockNumberResponseContent = await getBlockByNumberResponse.Content.ReadAsStringAsync();
             var contentJObject = JObject.Parse(getBlockNumberResponseContent);
+            if (string.IsNullOrWhiteSpace(contentJObject["result"].ToString()))
+                return new JArray();
+
             var transactionsJObject = contentJObject["result"]["transactions"];
             return (JArray) transactionsJObject;
         }
@@ -45,6 +48,9 @@ namespace EthereumTransactionSearch.Factories
             int blockNumberInDec)
         {
             var transactionDetailsJArray = await GetTransactionDetailsJArrayOfBlockNumber(blockNumberInDec);
+            if (transactionDetailsJArray.Count == 0)
+                return new List<TransactionDetails>().ToArray();
+
             var listOfTransactionDetails = transactionDetailsJArray
                 .Where(token => token["from"].ToString() == address || token["to"].ToString() == address)
                 .Select(token => new TransactionDetails(

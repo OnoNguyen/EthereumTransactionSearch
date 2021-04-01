@@ -6,6 +6,9 @@ using Xunit;
 
 namespace EthereumTransactionSearch.Test
 {
+    /// <summary>
+    /// not being taken care of atm. Please refer to MethodSpecsTests folder
+    /// </summary>
     public class InfuraIntegrationTests
     {
         [Fact]

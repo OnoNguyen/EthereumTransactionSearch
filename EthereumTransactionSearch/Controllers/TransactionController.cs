@@ -13,10 +13,12 @@ namespace EthereumTransactionSearch.Controllers
         [HttpGet("search")]
         public async Task<IEnumerable<TransactionDetails>> SearchAsync(string address, int blockNumber)
         {
-            var infuraClientInstance = new InfuraHttpClientInstanceFactory().GetInstance();
-            var listOfTransactionDetailsOfAddressInBlock = await infuraClientInstance.GetListOfTransactionDetailsOfAddressInBlock(address, blockNumber);
-         
-            return listOfTransactionDetailsOfAddressInBlock.ToArray();
+
+            var methodFactory = new GetListOfTransactionDetailsFromAddressInBlockMethodFactory();
+            var methodInstance = methodFactory.GetMethod((address, blockNumber));
+            var result = await methodInstance.ExecuteAsync();
+
+            return result.ToArray();
         }
     }
 }

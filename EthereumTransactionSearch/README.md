@@ -10,10 +10,18 @@ Backend comprises of:
 - Minimal Integration tests to query the api and make sure the client gets back what it needs. It would be more reliable to be able  to mock thesse api call and turn some into unit tests when there's time to do so.'
 - Exceptions are not handled to allow raw errors to bubble up when debugging.
 
+
+--------------------
+1/04/2021:
+- competed implementation of Method factory pattern infused with Generic types to help guid method implementers. To create a new method follow the following steps:
+
+
 ## Prerequisites 
 dotnet core sdk
+nodejs
 
 ## Run the app
+To build front end project run `npm i` in ClientApp folder to install all npm packages.
 In visual studio press F5 and it should run in debug mode.
 
 ##TODO:

@@ -1,15 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using EthereumTransactionSearch.Controllers;
 using EthereumTransactionSearch.Factories.Abstracts;
 using EthereumTransactionSearch.Infura;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace EthereumTransactionSearch.Factories
+namespace EthereumTransactionSearch.Factories.GetListOfTransactionDetailsFromAddressInBlock
 {
     /// <summary>
     /// Concrete method
@@ -17,6 +17,14 @@ namespace EthereumTransactionSearch.Factories
     public class GetListOfTransactionDetailsFromAddressInBlockMethod : InfuraMethod<(string address, int blockNumberInDec), IEnumerable<TransactionDetails>>
     {
         private readonly (string address, int blockNumberInDec) _input;
+
+        /// <summary>
+        /// for mocking
+        /// </summary>
+        [Obsolete("For mocking only")]
+        public GetListOfTransactionDetailsFromAddressInBlockMethod()
+        {             
+        }
 
         public GetListOfTransactionDetailsFromAddressInBlockMethod((string address, int blockNumberInDec) input)
         {
@@ -28,7 +36,7 @@ namespace EthereumTransactionSearch.Factories
         public override IEnumerable<TransactionDetails> Execute() => GetListOfTransactionDetailsOfAddressInBlock(Input).GetAwaiter().GetResult();
         public override async Task<IEnumerable<TransactionDetails>> ExecuteAsync() => await GetListOfTransactionDetailsOfAddressInBlock(Input);
 
-        public async Task<HttpResponseMessage> GetBlockByNumber(int blockNumberInDec,
+        public virtual async Task<string> GetBlockByNumber(int blockNumberInDec,
             bool getTransactionDetails = false)
         {
             var blockNumberInHex = blockNumberInDec.ToString("X");
@@ -40,13 +48,12 @@ namespace EthereumTransactionSearch.Factories
 
             var httpClient = new HttpClient();
             var getBlockByNumberResponse = await httpClient.PostAsync(InfuraApiEndpoint, requestStringContent);
-            return getBlockByNumberResponse;
+            return await getBlockByNumberResponse.Content.ReadAsStringAsync();
         }
 
         public async Task<JArray> GetTransactionDetailsJArrayOfBlockNumber(int blockNumberInDec)
         {
-            var getBlockByNumberResponse = await GetBlockByNumber(blockNumberInDec, true);
-            var getBlockNumberResponseContent = await getBlockByNumberResponse.Content.ReadAsStringAsync();
+            var getBlockNumberResponseContent = await GetBlockByNumber(blockNumberInDec, true);
             var contentJObject = JObject.Parse(getBlockNumberResponseContent);
             if (string.IsNullOrWhiteSpace(contentJObject["result"].ToString()))
                 return new JArray();

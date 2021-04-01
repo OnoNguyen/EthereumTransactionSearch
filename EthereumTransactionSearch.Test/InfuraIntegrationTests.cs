@@ -1,5 +1,7 @@
 using System.Linq;
 using EthereumTransactionSearch.Factories;
+using EthereumTransactionSearch.Factories.GetListOfTransactionDetailsFromAddressInBlock;
+using Newtonsoft.Json;
 using Xunit;
 
 namespace EthereumTransactionSearch.Test
@@ -10,13 +12,14 @@ namespace EthereumTransactionSearch.Test
         public async void GetBlockByNumberShouldReturnNoErrors()
         {
             // arrange
-            var infuraClient = new InfuraHttpClientInstanceFactory().GetInstance();
+            var methodFactory = new GetListOfTransactionDetailsFromAddressInBlockMethodFactory();
+            var methodInstance = new GetListOfTransactionDetailsFromAddressInBlockMethod(("0xc55eddadeeb47fcde0b3b6f25bd47d745ba7e7fa", 000033333));
 
             // act
-            var getBlockByNumberResponse = await infuraClient.GetBlockByNumber(9148873);
+            var getBlockByNumberResponse = await methodInstance.GetBlockByNumber(00221515, true);
 
             // assert
-            var result = getBlockByNumberResponse.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+            var result = getBlockByNumberResponse;
             Assert.DoesNotContain("error", result);
         }
 
@@ -24,10 +27,11 @@ namespace EthereumTransactionSearch.Test
         public async void GetTransactionDetailsJObjectOfBlockByNumberShouldReturnAValidJArray()
         {
             // arrange
-            var infuraClient = new InfuraHttpClientInstanceFactory().GetInstance();
+            var methodFactory = new GetListOfTransactionDetailsFromAddressInBlockMethodFactory();
+            var methodInstance = new GetListOfTransactionDetailsFromAddressInBlockMethod(("0xc55eddadeeb47fcde0b3b6f25bd47d745ba7e7fa", 9148873));
 
             // act
-            var transactionDetailsJArray = await infuraClient.GetTransactionDetailsJArrayOfBlockNumber(9148873);
+            var transactionDetailsJArray = await methodInstance.GetTransactionDetailsJArrayOfBlockNumber(9148873);
 
             // assert
             Assert.True(transactionDetailsJArray.Count > 0);
@@ -37,13 +41,14 @@ namespace EthereumTransactionSearch.Test
         public async void GetTransactionDetailsJObjectOfBlockByNumberShouldReturnCorrectCount()
         {
             // arrange
-            var infuraClient = new InfuraHttpClientInstanceFactory().GetInstance();
-
+            var methodFactory = new GetListOfTransactionDetailsFromAddressInBlockMethodFactory();
+            var methodInstance = new GetListOfTransactionDetailsFromAddressInBlockMethod(("0xc55eddadeeb47fcde0b3b6f25bd47d745ba7e7fa", 9148873));
             // act
             var listOfTransactionDetailsOfAddressInBlock =
-                await infuraClient.GetListOfTransactionDetailsOfAddressInBlock(
-                    "0xc55eddadeeb47fcde0b3b6f25bd47d745ba7e7fa", 9148873);
+                await methodInstance.GetListOfTransactionDetailsOfAddressInBlock(
+                    ("0xc55eddadeeb47fcde0b3b6f25bd47d745ba7e7fa", 9148873));
 
+            JsonConvert.SerializeObject(listOfTransactionDetailsOfAddressInBlock.ToArray());
             // assert
             Assert.Equal(2, listOfTransactionDetailsOfAddressInBlock.Count());
         }

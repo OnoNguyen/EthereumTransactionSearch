@@ -1,4 +1,4 @@
-﻿namespace EthereumTransactionSearch.Controllers
+﻿namespace EthereumTransactionSearch.Infura
 {
     public class TransactionDetails
     {

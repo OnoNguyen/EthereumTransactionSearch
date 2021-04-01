@@ -36,6 +36,13 @@ e.g:
             var methodInstance = methodFactory.GetMethod((address, blockNumber));
             var result = await methodInstance.ExecuteAsync();
 
+4. Testings: Specs tests are mandatory for each method class created, comprising of Suceeded and Failed tests on the Execute method of the class.
+e.g:
+
+Notes:
+- validations on input and output data type is forced at compile time.
+- validations of input, output business rules will be enforced by ValueObjects and EntityObjects.
+
 
 ## Prerequisites 
 dotnet core sdk

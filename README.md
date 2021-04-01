@@ -9,9 +9,6 @@
 
 1. Create concreate method class implementing InfuraMethod. It will force you to implement inT, outT and Execute method.
 e.g:
-    /// <summary>
-    /// Concrete method
-    /// </summary>
     public class GetListOfTransactionDetailsFromAddressInBlockMethod : InfuraMethod<(Address address, BlockNumber blockNumber), IEnumerable<TransactionDetails>>
     ...
 

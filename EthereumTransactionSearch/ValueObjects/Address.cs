@@ -8,7 +8,7 @@ namespace EthereumTransactionSearch.ValueObjects
 {
     public class Address: ValueObject<string>
     {
-        public Address(string address): base(address, () => address.ThrowIfEmpty(nameof(address)))
+        public Address(string address): base(address, () => address.ThrowIfEmpty())
         {
         }
 

@@ -13,36 +13,36 @@ Backend comprises of:
 
 --------------------
 1/04/2021:
-- competed implementation of Method factory pattern infused with Generic types to help guid method implementers. To create a new method follow the following steps:
+- competed implementation of InfuraMethodCollection as an injectable service into webapp.
+- Infura Methods are to be implemented with Generic types to help guid method implementers.
+- To create a new method follow the following steps:
 
-1. Create concreate method class implementing InfuraMethod. It will force you to implement inT, outT, Input property and Execute method.
+1. Create concreate method class implementing InfuraMethod. It will force you to implement inT, outT and Execute method.
 e.g:
     /// <summary>
     /// Concrete method
     /// </summary>
-    public class GetListOfTransactionDetailsFromAddressInBlockMethod : InfuraMethod<(string address, int blockNumber), IEnumerable<TransactionDetails>>
+    public class GetListOfTransactionDetailsFromAddressInBlockMethod : InfuraMethod<(Address address, BlockNumber blockNumber), IEnumerable<TransactionDetails>>
     ...
 
-2. Create concrete factory for the method class you have just done with above, implementing InfuraMethodFactory. This will force you to give inT, outT of the method above and overriding GetMethod to give consumers the final meaningful method to work on. 
+2. Add the above method class into the IInfuraMethodCollection and implement it in InfuraMethodCollection.
 e.g:
-    /// <summary>
-    /// Concrete factory/creator
-    /// </summary>
-    public class GetListOfTransactionDetailsFromAddressInBlockMethodFactory : InfuraMethodFactory<(string, int), IEnumerable<TransactionDetails>>
+- in IInfuraMethodCollection:
+        GetListOfTransactionDetailsFromAddressInBlockMethod GetListOfTransactionDetailsFromAddressInBlockMethodInstance();
 
-3. As consumer all you need to do is new up the method class created above, give it the input it wants and execute it (either sync or async).
+- in InfuraMethodCollection:
+        public GetListOfTransactionDetailsFromAddressInBlockMethod GetListOfTransactionDetailsFromAddressInBlockMethodInstance() => new GetListOfTransactionDetailsFromAddressInBlockMethod();
+
+3. As consumer all you need to do is injecting IInfuraMethodCollection into your controller and make use of the newly created method.
 e.g:
-            var methodFactory = new GetListOfTransactionDetailsFromAddressInBlockMethodFactory();
-            var methodInstance = methodFactory.GetMethod((address, blockNumber));
-            var result = await methodInstance.ExecuteAsync();
+            GetListOfTransactionDetailsFromAddressInBlockMethod methodInstance = _infuraMethodCollection.GetListOfTransactionDetailsFromAddressInBlockMethodInstance();
 
-4. Testings: Specs tests are mandatory for each method class created. Tests are around the execute method in the class. Make sure you cover all scenarios of the method specs.
-e.g: UnexisingAddressShouldReturnNoResult, UnexisingBlockShouldReturnNoResult, ResultsShouldMatchWithExpectedJson ...
+4. Testings: Specs tests are mandatory for each method class created. Tests are around the Execute method in the class. Make sure you cover all scenarios of the method specs.
+e.g: UnexisingAddressShouldReturnNoResult, UnexisingBlockShouldReturnNoResult, ResultsShouldMatchWithExpectedJson, ...
 
 Notes:
 - validations on input and output data type is forced at compile time.
 - validations of input, output business rules will be enforced by ValueObjects and EntityObjects.
-
 
 ## Prerequisites 
 dotnet core sdk
@@ -53,5 +53,4 @@ To build front end project run `npm i` in ClientApp folder to install all npm pa
 In visual studio press F5 and it should run in debug mode.
 
 ##TODO:
-- Unit tests.
-- Extend the ClientFactory when there are more requirements.
+- Logging.

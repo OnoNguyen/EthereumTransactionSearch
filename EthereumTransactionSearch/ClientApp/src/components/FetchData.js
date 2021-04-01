@@ -84,11 +84,11 @@ export class FetchData extends Component {
   }
 
   searchAddressOnBlock = async () => {
-    if (!this.state.address || !this.state.blockNumber)
-    {
-      alert('Address and BlockNumber are mandatory');
-      return;
-    }
+    //if (!this.state.address || !this.state.blockNumber)
+    //{
+    //  alert('Address and BlockNumber are mandatory');
+    //  return;
+    //}
 
     this.setState({ loading: true });
     const response = await fetch(

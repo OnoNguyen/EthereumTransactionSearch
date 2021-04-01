@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using EthereumTransactionSearch.Controllers;
+using EthereumTransactionSearch.Factories.Abstracts;
 using EthereumTransactionSearch.Infura;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;

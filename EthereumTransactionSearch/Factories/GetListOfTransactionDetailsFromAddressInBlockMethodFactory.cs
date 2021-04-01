@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using EthereumTransactionSearch.Controllers;
+using EthereumTransactionSearch.Factories.Abstracts;
 
 namespace EthereumTransactionSearch.Factories
 {

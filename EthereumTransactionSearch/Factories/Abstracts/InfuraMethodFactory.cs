@@ -1,4 +1,4 @@
-﻿namespace EthereumTransactionSearch.Factories
+﻿namespace EthereumTransactionSearch.Factories.Abstracts
 {
     /// <summary>
     /// MethodFactory (creator)

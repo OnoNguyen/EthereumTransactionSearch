@@ -36,8 +36,8 @@ e.g:
             var methodInstance = methodFactory.GetMethod((address, blockNumber));
             var result = await methodInstance.ExecuteAsync();
 
-4. Testings: Specs tests are mandatory for each method class created, comprising of Suceeded and Failed tests on the Execute method of the class.
-e.g:
+4. Testings: Specs tests are mandatory for each method class created. Tests are around the execute method in the class. Make sure you cover all scenarios of the method specs.
+e.g: UnexisingAddressShouldReturnNoResult, UnexisingBlockShouldReturnNoResult, ResultsShouldMatchWithExpectedJson ...
 
 Notes:
 - validations on input and output data type is forced at compile time.

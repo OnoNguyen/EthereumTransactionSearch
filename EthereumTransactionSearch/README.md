@@ -20,7 +20,7 @@ e.g:
     /// <summary>
     /// Concrete method
     /// </summary>
-    public class GetListOfTransactionDetailsFromAddressInBlockMethod : InfuraMethod<(string address, int blockNumberInDec), IEnumerable<TransactionDetails>>
+    public class GetListOfTransactionDetailsFromAddressInBlockMethod : InfuraMethod<(string address, int blockNumber), IEnumerable<TransactionDetails>>
     ...
 
 2. Create concrete factory for the method class you have just done with above, implementing InfuraMethodFactory. This will force you to give inT, outT of the method above and overriding GetMethod to give consumers the final meaningful method to work on. 

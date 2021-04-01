@@ -8,7 +8,7 @@ namespace EthereumTransactionSearch.Extensions
         {
             if (string.IsNullOrWhiteSpace(value))
             {
-                throw new ArgumentException($"{parameterName} cannot be empty", parameterName);
+                throw new ArgumentException("Address cannot be empty");
             }
         }
     }

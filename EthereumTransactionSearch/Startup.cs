@@ -1,6 +1,6 @@
+using EthereumTransactionSearch.InfuraMethods.MethodCollection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -28,6 +28,9 @@ namespace EthereumTransactionSearch
             {
                 configuration.RootPath = "ClientApp/build";
             });
+
+            // add MethodCollection as an injectable service
+            services.AddSingleton<IInfuraMethodCollection, InfuraMethodCollection>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
-using EthereumTransactionSearch.Factories.GetListOfTransactionDetailsFromAddressInBlock;
 using EthereumTransactionSearch.Infura;
+using EthereumTransactionSearch.ValueObjects;
+using EthereumTransactionSearch.InfuraMethods.MethodCollection;
+using EthereumTransactionSearch.InfuraMethods;
 
 namespace EthereumTransactionSearch.Controllers
 {
@@ -11,12 +13,17 @@ namespace EthereumTransactionSearch.Controllers
     [Route("[controller]")]
     public class TransactionController : ControllerBase
     {
+        private readonly IInfuraMethodCollection _infuraMethodCollection;
+
+        public TransactionController(IInfuraMethodCollection infuraMethodCollection)
+        {
+            _infuraMethodCollection = infuraMethodCollection;
+        }
         [HttpGet("search")]
         public async Task<IEnumerable<TransactionDetails>> SearchAsync(string address, int blockNumber)
         {
-            var methodFactory = new GetListOfTransactionDetailsFromAddressInBlockMethodFactory();
-            var methodInstance = methodFactory.GetMethod((address, blockNumber));
-            var result = await methodInstance.ExecuteAsync();
+            GetListOfTransactionDetailsFromAddressInBlockMethod methodInstance = _infuraMethodCollection.GetListOfTransactionDetailsFromAddressInBlockMethodInstance();
+            var result = await methodInstance.ExecuteAsync((new Address(address), new BlockNumber(blockNumber)));
 
             return result.ToArray();
         }

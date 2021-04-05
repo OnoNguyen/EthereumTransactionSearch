@@ -52,3 +52,5 @@ In visual studio press F5 and it should run in debug mode.
 
 ##TODO:
 - Logging.
+- Integration tests: (Haven't seen one).
+- E2E tests: Tests on react app.

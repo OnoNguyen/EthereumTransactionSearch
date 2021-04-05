@@ -1,9 +1,11 @@
 # BTC markets - Transaction search solution
 
 ## Design
-##Context Map:
-![Class Diagram](contextMap.svg)
-##Class Diagram:
+
+#### Context Map:
+![Context Map](contextMap.svg)
+
+#### Class Diagram:
 ![Class Diagram](infuraCD.svg)
 --------------------
 - Implementation of TransactionMethods as injectable services into mvc controllers.

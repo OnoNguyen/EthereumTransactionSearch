@@ -1,3 +1,4 @@
+using EthereumTransactionSearch.Infura;
 using EthereumTransactionSearch.InfuraMethods.MethodCollection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -30,7 +31,9 @@ namespace EthereumTransactionSearch
             });
 
             // add MethodCollection as an injectable service
-            services.AddSingleton<IInfuraMethodCollection, InfuraMethodCollection>();
+            //services.AddSingleton<ITransactionMethodCollection, TransactionMethods>();
+
+            //services.AddScoped<IInfuraHttpClient, InfuraHttpClient>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

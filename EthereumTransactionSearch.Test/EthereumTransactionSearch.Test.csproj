@@ -25,13 +25,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="MethodSpecsTests\GetListOfTransactionDetailsFromAddressInBlock\GetBlockByNumber_0000000_true_ResponsePayload.json">
+    <None Update="TransactionMethodTests\GetListOfTransactionDetailsFromAddressInBlock\GetBlockByNumber_0000000_true_ResponsePayload.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="MethodSpecsTests\GetListOfTransactionDetailsFromAddressInBlock\GetBlockByNumber_9148873_true_ExpectedResults.json">
+    <None Update="TransactionMethodTests\GetListOfTransactionDetailsFromAddressInBlock\GetBlockByNumber_9148873_true_ExpectedResults.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="MethodSpecsTests\GetListOfTransactionDetailsFromAddressInBlock\GetBlockByNumber_9148873_true_ResponsePayload.json">
+    <None Update="TransactionMethodTests\GetListOfTransactionDetailsFromAddressInBlock\GetBlockByNumber_9148873_true_ResponsePayload.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

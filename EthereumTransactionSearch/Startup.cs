@@ -1,3 +1,4 @@
+using EthereumTransactionSearch.Extensions;
 using EthereumTransactionSearch.Infura;
 using EthereumTransactionSearch.TransactionMethods;
 using Microsoft.AspNetCore.Builder;
@@ -74,24 +75,6 @@ namespace EthereumTransactionSearch
                     spa.UseReactDevelopmentServer(npmScript: "start");
                 }
             });
-        }
-    }
-
-    public static class ServiceCollectionExtensions
-    {
-        public static void AddInfuraMethods(this IServiceCollection services, List<Type> infuraMethods)
-        {
-            foreach (Type method in infuraMethods)
-            {
-                services.AddSingleton(method);
-            }
-        }
-        public static void AddTransactionMethods(this IServiceCollection services, List<Type> transactionMethods)
-        {
-            foreach (Type method in transactionMethods)
-            {
-                services.AddSingleton(method);
-            }
         }
     }
 }

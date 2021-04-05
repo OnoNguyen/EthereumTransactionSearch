@@ -2,11 +2,10 @@
 using System.Threading.Tasks;
 using System.Linq;
 using EthereumTransactionSearch.ValueObjects;
-using EthereumTransactionSearch.InfuraMethods.MethodCollection;
-using EthereumTransactionSearch.InfuraMethods;
 using EthereumTransactionSearch.Exceptions;
 using System.Net;
 using System;
+using EthereumTransactionSearch.TransactionMethods;
 
 namespace EthereumTransactionSearch.Controllers
 {
@@ -14,8 +13,11 @@ namespace EthereumTransactionSearch.Controllers
     [Route("[controller]")]
     public class TransactionController : ControllerBase
     {
-        public TransactionController()
+        private readonly GetListOfTransactionDetailsFromAddressInBlockMethod _getListOfTransactionDetailsFromAddressInBlockMethod;
+
+        public TransactionController(GetListOfTransactionDetailsFromAddressInBlockMethod getListOfTransactionDetailsFromAddressInBlockMethod)
         {
+            _getListOfTransactionDetailsFromAddressInBlockMethod = getListOfTransactionDetailsFromAddressInBlockMethod;
         }
 
         [HttpGet("search")]
@@ -23,25 +25,19 @@ namespace EthereumTransactionSearch.Controllers
         {
             try
             {
-                GetListOfTransactionDetailsFromAddressInBlockMethod methodInstance = TransactionMethods.GetListOfTransactionDetailsFromAddressInBlockMethodInstance();
-                var result = await methodInstance.ExecuteAsync((new Address(address), new BlockNumber(blockNumber)));
+                var result = await _getListOfTransactionDetailsFromAddressInBlockMethod.ExecuteAsync((new Address(address), new BlockNumber(blockNumber)));
 
                 return Ok(result.ToArray());
             }
             catch (BlockNumberOutOfRangeException ex1)
             {
                 // TODO: inject logging
-                return StatusCode((int)HttpStatusCode.BadRequest, ex1.Message);
+                return BadRequest(ex1);
             }
             catch (AddressEmptyException ex2)
             {
                 // TODO: inject logging
-                return StatusCode((int)HttpStatusCode.BadRequest, ex2.Message);
-            }
-            catch (Exception ex3)
-            {                
-                // TODO: inject logging
-                return StatusCode((int)HttpStatusCode.InternalServerError, ex3.Message);
+                return BadRequest(ex2);
             }
         }
     }

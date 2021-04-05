@@ -1,4 +1,5 @@
-﻿using EthereumTransactionSearch.ValueObjects;
+﻿using EthereumTransactionSearch.Exceptions;
+using EthereumTransactionSearch.ValueObjects;
 using System;
 using Xunit;
 
@@ -7,11 +8,11 @@ namespace EthereumTransactionSearch.Test
     public class AddressTests
     {
         [Fact]
-        public void AddressEmptyShouldThrowException()
+        public void AddressEmptyShouldThrowAddressEmptyException()
         {
             // arrange
             // act
-            var ex = Assert.Throws<ArgumentException>(() => new Address(string.Empty));
+            var ex = Assert.Throws<AddressEmptyException>(() => new Address(string.Empty));
 
             // assert
             Assert.Equal("Address cannot be empty", ex.Message);

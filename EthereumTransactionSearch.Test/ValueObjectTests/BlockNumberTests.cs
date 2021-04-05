@@ -1,5 +1,5 @@
-﻿using EthereumTransactionSearch.ValueObjects;
-using System;
+﻿using EthereumTransactionSearch.Exceptions;
+using EthereumTransactionSearch.ValueObjects;
 using Xunit;
 
 namespace EthereumTransactionSearch.Test
@@ -7,10 +7,10 @@ namespace EthereumTransactionSearch.Test
     public class BlockNumberTests
     {
         [Fact]
-        public void BlockNumberLessThan1ShouldThrowException()
+        public void BlockNumberLessThan1ShouldThrowBlockNumberOutOfRangeException()
         {
             // arrange & act
-            var ex = Assert.Throws<ArgumentOutOfRangeException>(() => new BlockNumber(0));
+            var ex = Assert.Throws<BlockNumberOutOfRangeException>(() => new BlockNumber(0));
 
             // assert
             Assert.Equal("Block has to be greater than 0", ex.Message);

@@ -1,11 +1,13 @@
 using EthereumTransactionSearch.Infura;
-using EthereumTransactionSearch.InfuraMethods.MethodCollection;
+using EthereumTransactionSearch.TransactionMethods;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
+using System.Collections.Generic;
 
 namespace EthereumTransactionSearch
 {
@@ -33,7 +35,12 @@ namespace EthereumTransactionSearch
             // add MethodCollection as an injectable service
             //services.AddSingleton<ITransactionMethodCollection, TransactionMethods>();
 
-            //services.AddScoped<IInfuraHttpClient, InfuraHttpClient>();
+            //services.AddSingleton<IInfuraHttpClient, InfuraHttpClient>();
+
+            services.AddInfuraMethods(new List<Type> { typeof(GetBlockByNumber) });
+
+            services.AddTransactionMethods(new List<Type> { typeof(GetListOfTransactionDetailsFromAddressInBlockMethod) });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -72,6 +79,24 @@ namespace EthereumTransactionSearch
                     spa.UseReactDevelopmentServer(npmScript: "start");
                 }
             });
+        }
+    }
+
+    public static class ServiceCollectionExtensions
+    {
+        public static void AddInfuraMethods(this IServiceCollection services, List<Type> infuraMethods)
+        {
+            foreach (Type method in infuraMethods)
+            {
+                services.AddSingleton(method);
+            }
+        }
+        public static void AddTransactionMethods(this IServiceCollection services, List<Type> transactionMethods)
+        {
+            foreach (Type method in transactionMethods)
+            {
+                services.AddSingleton(method);
+            }
         }
     }
 }

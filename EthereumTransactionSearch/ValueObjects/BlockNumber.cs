@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EthereumTransactionSearch.Exceptions;
+using System;
 
 namespace EthereumTransactionSearch.ValueObjects
 {
@@ -11,7 +12,7 @@ namespace EthereumTransactionSearch.ValueObjects
         private static void ThrowIfNegative(int v)
         {
             if (v <= 0)
-                throw new ArgumentOutOfRangeException("", "Block has to be greater than 0");
+                throw new BlockNumberOutOfRangeException("Block has to be greater than 0");
         }
 
         public string ToHex()

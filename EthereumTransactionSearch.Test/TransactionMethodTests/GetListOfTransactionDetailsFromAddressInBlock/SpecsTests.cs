@@ -1,9 +1,7 @@
-using EthereumTransactionSearch.Infura;
-using EthereumTransactionSearch.InfuraMethods;
+using EthereumTransactionSearch.TransactionMethods;
 using EthereumTransactionSearch.ValueObjects;
 using Moq;
 using Newtonsoft.Json;
-using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace EthereumTransactionSearch.Infura
 {
-    public class InfuraHttpClient //: IInfuraHttpClient
+    public static class InfuraHttpClient
     {
         private static readonly string InfuraApiEndpoint =
             "https://mainnet.infura.io/v3/22b2ebe2940745b3835907b30e8257a4";

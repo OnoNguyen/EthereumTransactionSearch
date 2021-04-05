@@ -1,4 +1,4 @@
-﻿using EthereumTransactionSearch.Infura.Interfaces;
+﻿using EthereumTransactionSearch.Infura.Abstracts;
 using EthereumTransactionSearch.ValueObjects;
 
 namespace EthereumTransactionSearch.Infura

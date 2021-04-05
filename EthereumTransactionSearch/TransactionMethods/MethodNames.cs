@@ -1,4 +1,4 @@
-﻿namespace EthereumTransactionSearch.InfuraMethods
+﻿namespace EthereumTransactionSearch.TransactionMethods
 {
     public enum MethodNames
     {

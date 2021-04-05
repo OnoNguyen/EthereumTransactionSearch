@@ -32,11 +32,6 @@ namespace EthereumTransactionSearch
                 configuration.RootPath = "ClientApp/build";
             });
 
-            // add MethodCollection as an injectable service
-            //services.AddSingleton<ITransactionMethodCollection, TransactionMethods>();
-
-            //services.AddSingleton<IInfuraHttpClient, InfuraHttpClient>();
-
             services.AddInfuraMethods(new List<Type> { typeof(GetBlockByNumber) });
 
             services.AddTransactionMethods(new List<Type> { typeof(GetListOfTransactionDetailsFromAddressInBlockMethod) });

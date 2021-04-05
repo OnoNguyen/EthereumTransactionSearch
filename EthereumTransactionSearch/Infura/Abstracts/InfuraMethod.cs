@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace EthereumTransactionSearch.Infura.Abstracts
 {
-    public abstract class InfuraMethod<inT> : IInfuraMethod<inT>
+    public abstract class InfuraMethod<inT>
     {
         public abstract InfuraRequestContentV2 GetInfuraRequestContentV2(inT input);
 
@@ -29,10 +29,5 @@ namespace EthereumTransactionSearch.Infura.Abstracts
             return await response.Content.ReadAsStringAsync();
         }
 
-    }
-
-    public interface IInfuraMethod<inT>
-    {
-        Task<string> GetResponseStringContentAsync(inT input);
     }
 }

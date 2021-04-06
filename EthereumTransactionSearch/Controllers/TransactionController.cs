@@ -3,9 +3,8 @@ using System.Threading.Tasks;
 using System.Linq;
 using EthereumTransactionSearch.ValueObjects;
 using EthereumTransactionSearch.Exceptions;
-using System.Net;
-using System;
 using EthereumTransactionSearch.TransactionMethods;
+using System.Collections.Generic;
 
 namespace EthereumTransactionSearch.Controllers
 {
@@ -13,9 +12,9 @@ namespace EthereumTransactionSearch.Controllers
     [Route("[controller]")]
     public class TransactionController : ControllerBase
     {
-        private readonly GetListOfTransactionDetailsFromAddressInBlockMethod _getListOfTransactionDetailsFromAddressInBlockMethod;
+        private ITransactionMethod<(Address address, BlockNumber blockNumber), IEnumerable<TransactionDetails>> _getListOfTransactionDetailsFromAddressInBlockMethod;
 
-        public TransactionController(GetListOfTransactionDetailsFromAddressInBlockMethod getListOfTransactionDetailsFromAddressInBlockMethod)
+        public TransactionController(ITransactionMethod<(Address address, BlockNumber blockNumber), IEnumerable<TransactionDetails>> getListOfTransactionDetailsFromAddressInBlockMethod)
         {
             _getListOfTransactionDetailsFromAddressInBlockMethod = getListOfTransactionDetailsFromAddressInBlockMethod;
         }

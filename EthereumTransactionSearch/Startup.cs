@@ -1,6 +1,8 @@
 using EthereumTransactionSearch.Extensions;
 using EthereumTransactionSearch.Infura;
+using EthereumTransactionSearch.Infura.Abstracts;
 using EthereumTransactionSearch.TransactionMethods;
+using EthereumTransactionSearch.ValueObjects;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
@@ -33,9 +35,9 @@ namespace EthereumTransactionSearch
                 configuration.RootPath = "ClientApp/build";
             });
 
-            services.AddInfuraMethods(new List<Type> { typeof(GetBlockByNumber) });
-
-            services.AddTransactionMethods(new List<Type> { typeof(GetListOfTransactionDetailsFromAddressInBlockMethod) });
+            // TODO: this reg to be done automatically by reflection.
+            services.AddSingleton<IInfuraMethod<(BlockNumber, bool)>, GetBlockByNumber>();
+            services.AddSingleton<ITransactionMethod<(Address address, BlockNumber blockNumber), IEnumerable<TransactionDetails>>, GetListOfTransactionDetailsFromAddressInBlockMethod>();
 
         }
 

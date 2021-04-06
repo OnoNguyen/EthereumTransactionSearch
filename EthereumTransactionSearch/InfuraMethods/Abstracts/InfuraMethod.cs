@@ -23,15 +23,10 @@ namespace EthereumTransactionSearch.Infura.Abstracts
             return response;
         }
 
-        private async Task<string> GetResponseStringContentAsync(inT input)
+        public async Task<string> GetResponseStringAsync(inT input)
         {
             var response = await PostAsync(input);
             return await response.Content.ReadAsStringAsync();
-        }
-
-        public async Task<string> GetResponseStringAsync(inT input)
-        {
-            return await GetResponseStringContentAsync(input);
         }
     }
 }

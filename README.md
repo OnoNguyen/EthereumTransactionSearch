@@ -1,5 +1,5 @@
-# BTC markets - Transaction solution
-
+# BTC markets - Transaction Query
+This solution aims to solve the read part of the Ethereum transactions, with patterns embedded in interfaces to help devs to be able to implement Infura functions/methods and transaction functions/methods in a more structured and easier way.
 ## Design
 
 #### Context Map:

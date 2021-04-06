@@ -1,4 +1,4 @@
-# BTC markets - Transaction search solution
+# BTC markets - Transaction solution
 
 ## Design
 
@@ -8,13 +8,15 @@
 #### Class Diagram:
 ![Class Diagram](infuraCD.svg)
 --------------------
-- Implementation of TransactionMethods as injectable services into mvc controllers.
-- TransactionMethods use input as string from InfuraMethods which directly query Infura RPC endpoint.
+
+- InfuraMethods and TransactionMethods are injectable in mvc webapp.
+- TransactionMethods use input (as Task\<string\>) from InfuraMethods.
+- InfuraMethods directly query Infura RPC endpoint to get back responses as Task\<string\>.
 - TransactionMethods and InfuraMethods are to be implemented with Generic types to help guide new implementers.
 - To create a new method follow the following steps:
 
-1. Create InfuraMethod: This method will help calling the Infura rpc and return data as a json string.
-Make sure this InfuraMethod implements the abstract class InfuraMethod<inT>. All it needs to do is overriding the GetInfuraRequestContentV2
+1. Create InfuraMethod:
+- Make sure this InfuraMethod implements the abstract class InfuraMethod\<inT\>. All it needs to do is overriding GetInfuraRequestContentV2()
 e.g:
 ```
    public class GetBlockByNumber : InfuraMethod<(BlockNumber blockNumber, bool getTransactionDetails)>
@@ -24,45 +26,48 @@ e.g:
                 new object[] { $"0x{input.blockNumber.ToHex()}", input.getTransactionDetails });
     }
 ```
-2. Add the newly created method in to startup.cs so it'd become injectable, as per following:
-services.AddInfuraMethods(new List<Type> { typeof(GetBlockNumber) });
-The above list in the future can be auto-populated by reflection.
+- Make the newly created method injectable in `ServiceCollectionExtensions.AddInfuraMethods` like following:
+`services.AddSingleton<IInfuraMethod<(BlockNumber, bool)>, GetBlockByNumber>();`
+(The above in the future can be auto-populated by reflection)
 
-3. Next, create concreate method class implementing TransactionMethod. It will force you to implement inT, outT and Execute methods.
+2. Create TransactionMethod: 
+- create concreate method class implementing interface `ITransactionMethod<inT, outT>`. This will force you to implement inT, outT and Execute methods.
 e.g:
 ```
-    public class GetListOfTransactionDetailsFromAddressInBlockMethod : TransactionMethod<(Address address, BlockNumber blockNumber), IEnumerable<TransactionDetails>>
-    ...
+    public class GetListOfTransactionDetailsFromAddressInBlockMethod : ITransactionMethod<(Address address, BlockNumber blockNumber), IEnumerable<TransactionDetails>>
+       ...
 ```
-4. Add the newly created method in to startup.cs so it'd be injectable, as per following:
-```
-services.AddTransactionMethods(new List<Type> { typeof(GetListOfTransactionDetailsFromAddressInBlockMethod) });
-```
-The above list in the future can be auto-populated by reflection.
+- Make the newly created method injectable in `ServiceCollectionExtensions.AddTransactionMethods` like following:
+`services.AddSingleton<ITransactionMethod<(Address address, BlockNumber blockNumber), IEnumerable<TransactionDetails>>, GetListOfTransactionDetailsFromAddressInBlockMethod>();`
+(The above in the future can be auto-populated by reflection)
 
-5. As consumer all you need to do is injecting the transaction method needed into your controller and make use of the newly created method.
+3. As consumer all you need to do is injecting the transaction method needed into your controller and make use of it.
 e.g:
 ```
-       private readonly GetListOfTransactionDetailsFromAddressInBlockMethod _getListOfTransactionDetailsFromAddressInBlockMethod;
+        private ITransactionMethod<(Address address, BlockNumber blockNumber), IEnumerable<TransactionDetails>> _getListOfTransactionDetailsFromAddressInBlockMethod;
 
-        public TransactionController(GetListOfTransactionDetailsFromAddressInBlockMethod getListOfTransactionDetailsFromAddressInBlockMethod)
+        public TransactionController(ITransactionMethod<(Address address, BlockNumber blockNumber), IEnumerable<TransactionDetails>> getListOfTransactionDetailsFromAddressInBlockMethod)
         {
             _getListOfTransactionDetailsFromAddressInBlockMethod = getListOfTransactionDetailsFromAddressInBlockMethod;
         }
 ```
-6. Testings: Specs tests are mandatory for each method class created. Tests are around the Execute method in the class. Make sure you cover all scenarios of the method specs.
-![Specs Test](SpecsTest.png)
-e.g: UnexisingAddressShouldReturnNoResult, UnexisingBlockShouldReturnNoResult, ResultsShouldMatchWithExpectedJson, ...
-If there are unit tests worth testing then add them in UnitTests.cs class.
-There are also tests for ValueObjects and Tests for controllers to cover tests on all layers of the design.
 
-Notes:
-- validations on input and output data type is forced at compile time.
+4. Testings:
+- There are different layers of testings.
+- ValueObjects tests are the lowest layer of testing, aiming to test the nature of value objects define (e.g: AddressEmptyShouldThrowExeption.)
+- Specs tests are mandatory for each TransactionMethod class created. Tests are around the Execute method in the class. Make sure you cover all scenarios of the method specs (e.g: UnexisingBlockShouldReturnNoResult)
+#### Specs Test Trategy
+![Specs Test Trategy](SpecsTest.png)
+- If there are unit tests worth testing then add them in UnitTests.cs class.
+- No tests are needed for InfuraMethods since these query RPC directly.
+- Controller tests are tests on controller layer, making sure the controller return correct responses (e.g: SearchAsync_ShouldReturnOkIfNoException)
+
+#### Notes
+- validations on input and output data type are forced at compile time via generic typings.
 - validations of input, output business rules will be enforced by ValueObjects and ReferenceObjects.
 - ValueObjects are values in nature, and are immutable.
 
-
-
+-----------------------------------
 Language: dotnet core
 Testing framework: xUnit
 This solution focuses on backend so the front-end was left bare minimum react app.
@@ -80,10 +85,10 @@ nodejs
 To build front end project run `npm i` in ClientApp folder to install all npm packages.
 In visual studio press F5 and it should run in debug mode.
 
-##TODO:
+#### TODO:
 - Logging.
 - Integration tests: (Haven't seen one).
 - E2E tests: Tests on react app.
 
-##QUESTIONS:
+#### QUESTIONS:
 - Are there going to be write operations?

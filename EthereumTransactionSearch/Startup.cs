@@ -1,16 +1,10 @@
 using EthereumTransactionSearch.Extensions;
-using EthereumTransactionSearch.Infura;
-using EthereumTransactionSearch.Infura.Abstracts;
-using EthereumTransactionSearch.TransactionMethods;
-using EthereumTransactionSearch.ValueObjects;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
 
 namespace EthereumTransactionSearch
 {
@@ -36,8 +30,8 @@ namespace EthereumTransactionSearch
             });
 
             // TODO: this reg to be done automatically by reflection.
-            services.AddSingleton<IInfuraMethod<(BlockNumber, bool)>, GetBlockByNumber>();
-            services.AddSingleton<ITransactionMethod<(Address address, BlockNumber blockNumber), IEnumerable<TransactionDetails>>, GetListOfTransactionDetailsFromAddressInBlockMethod>();
+            services.AddInfuraMethods();
+            services.AddTransactionMethods();
 
         }
 

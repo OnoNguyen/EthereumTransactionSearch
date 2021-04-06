@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using EthereumTransactionSearch.Infura;
+using EthereumTransactionSearch.Infura.Abstracts;
 using EthereumTransactionSearch.ValueObjects;
 using Newtonsoft.Json.Linq;
 
@@ -12,21 +12,21 @@ namespace EthereumTransactionSearch.TransactionMethods
     /// </summary>
     public class GetListOfTransactionDetailsFromAddressInBlockMethod : ITransactionMethod<(Address address, BlockNumber blockNumber), IEnumerable<TransactionDetails>>
     {
-        private readonly GetBlockByNumber _getBlockByNumber;
+        private IInfuraMethod<(BlockNumber, bool)> _getBlockByNumber;
 
         public GetListOfTransactionDetailsFromAddressInBlockMethod()
         {
 
         }
 
-        public GetListOfTransactionDetailsFromAddressInBlockMethod(GetBlockByNumber getBlockByNumber)
+        public GetListOfTransactionDetailsFromAddressInBlockMethod(IInfuraMethod<(BlockNumber, bool)> getBlockByNumber)
         {
             _getBlockByNumber = getBlockByNumber;
         }
 
         public virtual async Task<string> GetBlockByNumber(BlockNumber blockNumber, bool getTransactionDetails = false)
         {
-            return await _getBlockByNumber.GetResponseStringContentAsync((blockNumber, getTransactionDetails));
+            return await _getBlockByNumber.GetResponseStringAsync((blockNumber, getTransactionDetails));
         }
 
         public async Task<JArray> GetTransactionDetailsJArrayOfBlockNumber(BlockNumber blockNumber)

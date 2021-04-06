@@ -1,13 +1,10 @@
-using EthereumTransactionSearch.Infura;
-using EthereumTransactionSearch.TransactionMethods;
+using EthereumTransactionSearch.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
 
 namespace EthereumTransactionSearch
 {
@@ -32,14 +29,9 @@ namespace EthereumTransactionSearch
                 configuration.RootPath = "ClientApp/build";
             });
 
-            // add MethodCollection as an injectable service
-            //services.AddSingleton<ITransactionMethodCollection, TransactionMethods>();
-
-            //services.AddSingleton<IInfuraHttpClient, InfuraHttpClient>();
-
-            services.AddInfuraMethods(new List<Type> { typeof(GetBlockByNumber) });
-
-            services.AddTransactionMethods(new List<Type> { typeof(GetListOfTransactionDetailsFromAddressInBlockMethod) });
+            // TODO: this reg to be done automatically by reflection.
+            services.AddInfuraMethods();
+            services.AddTransactionMethods();
 
         }
 
@@ -79,24 +71,6 @@ namespace EthereumTransactionSearch
                     spa.UseReactDevelopmentServer(npmScript: "start");
                 }
             });
-        }
-    }
-
-    public static class ServiceCollectionExtensions
-    {
-        public static void AddInfuraMethods(this IServiceCollection services, List<Type> infuraMethods)
-        {
-            foreach (Type method in infuraMethods)
-            {
-                services.AddSingleton(method);
-            }
-        }
-        public static void AddTransactionMethods(this IServiceCollection services, List<Type> transactionMethods)
-        {
-            foreach (Type method in transactionMethods)
-            {
-                services.AddSingleton(method);
-            }
         }
     }
 }

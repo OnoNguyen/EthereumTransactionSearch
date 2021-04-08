@@ -1,7 +1,7 @@
-﻿using EthereumTransactionSearch.Infura.Abstracts;
+﻿using EthereumTransactionSearch.InfuraMethods.Abstracts;
 using EthereumTransactionSearch.ValueObjects;
 
-namespace EthereumTransactionSearch.Infura
+namespace EthereumTransactionSearch.InfuraMethods
 {
     public class GetBlockByNumber : InfuraMethod<(BlockNumber blockNumber, bool getTransactionDetails)>
     {

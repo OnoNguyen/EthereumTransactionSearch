@@ -3,7 +3,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EthereumTransactionSearch.Infura.Abstracts
+namespace EthereumTransactionSearch.InfuraMethods.Abstracts
 {
     public abstract class InfuraMethod<inT> : IInfuraMethod<inT>
     {

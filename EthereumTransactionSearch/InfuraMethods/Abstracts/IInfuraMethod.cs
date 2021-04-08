@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace EthereumTransactionSearch.Infura.Abstracts
+namespace EthereumTransactionSearch.InfuraMethods.Abstracts
 {
     public interface IInfuraMethod<inT>
     {

@@ -3,7 +3,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EthereumTransactionSearch.Infura
+namespace EthereumTransactionSearch.InfuraMethods
 {
     public static class InfuraHttpClient
     {

@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace EthereumTransactionSearch.Infura
+namespace EthereumTransactionSearch.InfuraMethods
 {
     public class InfuraRequestContentV2
     {

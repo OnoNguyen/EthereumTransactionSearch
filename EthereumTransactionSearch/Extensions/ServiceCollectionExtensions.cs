@@ -1,9 +1,9 @@
-﻿using EthereumTransactionSearch.Infura;
-using EthereumTransactionSearch.Infura.Abstracts;
+﻿using EthereumTransactionSearch.InfuraMethods;
+using EthereumTransactionSearch.InfuraMethods.Abstracts;
 using EthereumTransactionSearch.TransactionMethods;
+using EthereumTransactionSearch.TransactionMethods.Abstracts;
 using EthereumTransactionSearch.ValueObjects;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 using System.Collections.Generic;
 
 namespace EthereumTransactionSearch.Extensions

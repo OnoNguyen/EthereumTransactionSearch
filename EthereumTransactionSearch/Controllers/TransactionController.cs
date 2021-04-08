@@ -5,6 +5,7 @@ using EthereumTransactionSearch.ValueObjects;
 using EthereumTransactionSearch.Exceptions;
 using EthereumTransactionSearch.TransactionMethods;
 using System.Collections.Generic;
+using EthereumTransactionSearch.TransactionMethods.Abstracts;
 
 namespace EthereumTransactionSearch.Controllers
 {

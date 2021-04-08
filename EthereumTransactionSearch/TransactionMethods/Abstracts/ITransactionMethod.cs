@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace EthereumTransactionSearch.TransactionMethods
+namespace EthereumTransactionSearch.TransactionMethods.Abstracts
 {
     /// <summary>
     /// Abstract method with inT, outT, Execute and ExecuteAsync to be implemented.

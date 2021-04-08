@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using EthereumTransactionSearch.Infura.Abstracts;
+using EthereumTransactionSearch.InfuraMethods.Abstracts;
+using EthereumTransactionSearch.TransactionMethods.Abstracts;
 using EthereumTransactionSearch.ValueObjects;
 using Newtonsoft.Json.Linq;
 

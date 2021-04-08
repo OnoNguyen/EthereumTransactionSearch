@@ -1,13 +1,10 @@
 ﻿using EthereumTransactionSearch.Controllers;
 using EthereumTransactionSearch.Exceptions;
 using EthereumTransactionSearch.TransactionMethods;
-using EthereumTransactionSearch.ValueObjects;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Newtonsoft.Json;
 using System.IO;
-using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 using Xunit;
 

@@ -57,7 +57,7 @@ e.g:
 - ValueObjects tests are the lowest layer of testing, aiming to test the nature of value objects define (e.g: AddressEmptyShouldThrowExeption.)
 - Specs tests are mandatory for each TransactionMethod class created. Tests are around the Execute method in the class. Make sure you cover all scenarios of the method specs (e.g: UnexisingBlockShouldReturnNoResult)
 #### Specs Test Trategy
-![Specs Test Trategy](SpecsTest.png)
+![Specs Test Trategy](SpecsTestStrategy.svg)
 - If there are unit tests worth testing then add them in UnitTests.cs class.
 - No tests are needed for InfuraMethods since these query RPC directly.
 - Controller tests are tests on controller layer, making sure the controller return correct responses (e.g: SearchAsync_ShouldReturnOkIfNoException)

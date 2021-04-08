@@ -4,7 +4,6 @@ using EthereumTransactionSearch.TransactionMethods;
 using EthereumTransactionSearch.TransactionMethods.Abstracts;
 using EthereumTransactionSearch.ValueObjects;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 using System.Collections.Generic;
 
 namespace EthereumTransactionSearch.Extensions
